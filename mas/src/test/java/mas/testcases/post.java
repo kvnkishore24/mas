@@ -86,8 +86,7 @@ public class post {
 				}
 
 				JsonNode apiversionNode = actualjson.get("apiVersion");
-				System.out
-						.println("NODE TYPE: " + apiversionNode.getNodeType());// string
+				System.out.println("NODE TYPE: " + apiversionNode.getNodeType());// string
 				/*
 				 * String versionNode = apiversionNode.toString();
 				 * Assert.assertEquals( versionNode.substring(1,
