@@ -9,8 +9,6 @@ package mas.testcases;
  * @class post.java
  */
 
-
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,32 +38,38 @@ public class post {
 		HttpClient hclient = new DefaultHttpClient();
 		ArrayList<String> fieldarraylist = new ArrayList<String>();
 		try {
+			// Request
 			HttpPost PostReq = new HttpPost(baseurl);
 
-//creating headers by adding NAME-VALUE-PAIR to list
+			// creating headers by adding NAME-VALUE-PAIR to list
 			List<NameValuePair> namevaluepairs = new ArrayList<NameValuePair>(2);
 			namevaluepairs.add(new BasicNameValuePair("first_name", "kishore"));
 			namevaluepairs.add(new BasicNameValuePair("last_name", "kalapala"));
-			namevaluepairs.add(new BasicNameValuePair("email","kishorekalapala@digital-nirvana.com"));
+			namevaluepairs.add(new BasicNameValuePair("email",
+					"kishorekalapala@digital-nirvana.com"));
 			namevaluepairs.add(new BasicNameValuePair("password", "123456"));
-//adding parameters to request
+			// adding parameters to request
 			PostReq.setEntity(new UrlEncodedFormEntity(namevaluepairs));
-//executing Request
-			System.out.println("executing request "+PostReq.getRequestLine());
+			System.out.println("executing request " + PostReq.getRequestLine());
+
+			// executing Request
 			HttpResponse response = hclient.execute(PostReq);
-//Getting Entity
+			// Entity
 			HttpEntity resEntity = response.getEntity();
-//converting entity to string
-			String responsebody = EntityUtils.toString(resEntity);
+
 			if (resEntity != null) {
+				// converting entity to string
+				String responsebody = EntityUtils.toString(resEntity);
 				System.out.println(response.getStatusLine());
-				System.out.println("Resoponse content length: "	+ resEntity.getContentLength());
+				System.out.println("Resoponse content length: "
+						+ resEntity.getContentLength());
 				System.out.println("Chunked? " + resEntity.isChunked());
 				System.out.println("data:" + responsebody);
-//
+				//
 				ObjectMapper mapper = new ObjectMapper();
 				JsonNode actualjson = mapper.readTree(responsebody);
-				System.out.println("JSON PAGE TYPE: " + actualjson.getNodeType());// object
+				System.out.println("JSON PAGE TYPE: "
+						+ actualjson.getNodeType());// object
 				Assert.assertNotNull(actualjson);
 
 				Iterator<String> fieldnames = actualjson.fieldNames();

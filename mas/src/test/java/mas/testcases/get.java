@@ -12,6 +12,8 @@ package mas.testcases;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
@@ -21,9 +23,13 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class get {
 	private static final String URL_SECURED_BY_BASIC_AUTHENTICATION = "http://localhost/alphastreet/api/public/api/1.0/user/login";
@@ -67,8 +73,7 @@ public class get {
 	}
 
 	@Test
-	public final void userLogin() throws ClientProtocolException,
-			IOException
+	public final void userLogin() throws ClientProtocolException, IOException
 
 	{
 		client = HttpClientBuilder.create().build();
@@ -78,6 +83,24 @@ public class get {
 		response = client.execute(request);
 		int statuscode = response.getStatusLine().getStatusCode();
 		System.out.println(statuscode);
+
+		HttpEntity entity = response.getEntity();
+		String responseString = EntityUtils.toString(entity);
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jnode = mapper.readTree(responseString);
+
+		Iterator<String> fieldnames = jnode.fieldNames();
+		while (fieldnames.hasNext()) {
+			ArrayList<String> fieldNameslist = new ArrayList<String>();
+			fieldNameslist.add(fieldnames.next());
+			System.out.print(fieldNameslist);
+			for (int i = 0; i < fieldNameslist.size(); i++) {
+
+				JsonNode nodevalues = jnode.get(fieldNameslist.get(i));
+				System.out.println(nodevalues);
+			}
+
+		}
 
 	}
 }
