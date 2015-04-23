@@ -33,7 +33,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class post {
 	@Test
 	public void signUpPost() throws ClientProtocolException, IOException {
-		String baseurl = "http://localhost/as/api/public/api/1.0/user/create";
+		String baseurl = "http://localhost/alphastreet/api/public/api/1.0/user/create";
 
 		HttpClient hclient = new DefaultHttpClient();
 		ArrayList<String> fieldarraylist = new ArrayList<String>();

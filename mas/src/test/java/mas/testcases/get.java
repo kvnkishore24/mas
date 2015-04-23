@@ -21,9 +21,11 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -73,6 +75,16 @@ public class get {
 	}
 
 	@Test
+	public final void validation() {
+		String jsonmimetype = "application/json";
+		String mimeType = ContentType.getOrDefault(response.getEntity())
+				.getMimeType();
+		System.out.println(mimeType);
+		Assert.assertEquals(mimeType, jsonmimetype);
+
+	}
+
+	@Test
 	public final void userLogin() throws ClientProtocolException, IOException
 
 	{
@@ -80,6 +92,7 @@ public class get {
 		HttpGet request = new HttpGet(URL_SECURED_BY_BASIC_AUTHENTICATION);
 		request.setHeader(HttpHeaders.AUTHORIZATION,
 				authorizationHeader(DEFAULT_USER, DEFAULT_PASS));
+		
 		response = client.execute(request);
 		int statuscode = response.getStatusLine().getStatusCode();
 		System.out.println(statuscode);
