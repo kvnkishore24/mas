@@ -36,6 +36,7 @@ public class get {
 	@BeforeClass
 	public final void before() {
 		client = HttpClientBuilder.create().build();
+		System.out.println("before class");
 	}
 
 	@AfterClass
