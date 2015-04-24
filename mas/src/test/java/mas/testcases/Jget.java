@@ -14,19 +14,18 @@ import org.testng.annotations.Test;
  * @class Jget.java
  */
 public class Jget {
-Database database = new Database();
+	Database database = new Database();
+
 	@Test
 	public final void jsonpayloadtesting() throws Exception {
-		
+
 		String output = database.run("jdbc:mysql://localhost:3306/", "root", "123456", "as", "users", "id", 13);
-	   if(output != null){
-		System.out.println(output);   
-	   }
-	   else
-	   {
-		   System.out.println("User not avaiable Users-Table");
-	   }
-	
+		if (output != null) {
+			System.out.println(output);
+		} else {
+			System.out.println("User not avaiable Users-Table");
+		}
+
 	}
 
 }

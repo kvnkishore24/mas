@@ -15,6 +15,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import mas.utils.BaseApi;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
@@ -34,10 +36,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class get {
-	private static final String URL_SECURED_BY_BASIC_AUTHENTICATION = "http://localhost/alphastreet/api/public/api/1.0/user/login";
-	private static final String DEFAULT_USER = "kishorekalapala@digital-nirvana.com";
-	private static final String DEFAULT_PASS = "123456";
 
+	BaseApi baseapi = new BaseApi();
 	private CloseableHttpClient client;
 	private CloseableHttpResponse response;
 
@@ -52,7 +52,6 @@ public class get {
 		if (response == null) {
 			return;
 		}
-
 		try {
 			final HttpEntity entity = response.getEntity();
 			if (entity != null) {
@@ -64,11 +63,9 @@ public class get {
 		}
 	}
 
-	private final String authorizationHeader(final String username,
-			final String password) {
+	private final String authorizationHeader(final String username, final String password) {
 		final String auth = username + ":" + password;
-		final byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset
-				.forName("US-ASCII")));
+		final byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
 		final String authHeader = "Basic " + new String(encodedAuth);
 
 		return authHeader;
@@ -76,23 +73,21 @@ public class get {
 
 	@Test
 	public final void validation() {
+
 		String jsonmimetype = "application/json";
-		String mimeType = ContentType.getOrDefault(response.getEntity())
-				.getMimeType();
+		String mimeType = ContentType.getOrDefault(response.getEntity()).getMimeType();
 		System.out.println(mimeType);
 		Assert.assertEquals(mimeType, jsonmimetype);
 
 	}
 
 	@Test
-	public final void userLogin() throws ClientProtocolException, IOException
+	public final void userLogin() throws ClientProtocolException, IOException {
 
-	{
 		client = HttpClientBuilder.create().build();
-		HttpGet request = new HttpGet(URL_SECURED_BY_BASIC_AUTHENTICATION);
-		request.setHeader(HttpHeaders.AUTHORIZATION,
-				authorizationHeader(DEFAULT_USER, DEFAULT_PASS));
-		
+		HttpGet request = new HttpGet(baseapi.API_URL + "/user/login");
+		request.setHeader(HttpHeaders.AUTHORIZATION, authorizationHeader(baseapi.USER_NAME, baseapi.PAS_WORD));
+
 		response = client.execute(request);
 		int statuscode = response.getStatusLine().getStatusCode();
 		System.out.println(statuscode);
