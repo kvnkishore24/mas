@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
  * @project mas
  * @class Jget.java
  */
-public class Jget {
+public class DatabaseTest {
 	Database database = new Database();
 
 	@Test

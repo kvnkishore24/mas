@@ -118,13 +118,16 @@ public class AlphaLogin {
 								JSONArray itemsArray = (JSONArray) items;
 								for (Object itemObject : itemsArray) {
 									JSONObject obj3 = (JSONObject) itemObject;
-
+									System.out.println("-----------------------------------------------------------------");
+									System.out.println("Number of Stocks ::"+obj3.size());
+									System.out.println("-----------------------------------------------------------------");
 									String Stocks = obj3.get("id").toString();
+							
 									System.out.println(Stocks);
 									System.out.println(obj3.get("name").toString());
 									System.out.println(obj3.get("ticker").toString());
 									System.out.println(obj3.get("sector").toString());
-									System.out.println("----------------next-------------------");
+									
 								}
 
 							}

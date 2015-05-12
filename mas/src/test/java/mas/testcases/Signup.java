@@ -31,7 +31,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
 
-public class post {
+public class Signup {
 	
 	ITestResult result;
 	final String value = "OBJECT";
